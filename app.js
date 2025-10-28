@@ -15,7 +15,22 @@ app.use(express.urlencoded({ extended: true }))  // for form data
 app.use(express.json())
 
 app.get('/', (req, res) => {
-  res.render('index.ejs')
+   if(req.cookies.token){
+        jwt.verify(req.cookies.token,'secretkey',(err,decoded)=>{
+            if(err){
+                res.render('index.ejs')
+            }
+            else{
+                let useremail=decoded.email
+                let user=User.findOne({email:useremail}).then((user)=>{
+                    res.redirect('/dashboard/'+user._id)
+                })
+            }
+        })
+    }
+    else{
+        res.render('index.ejs')
+    }
 })
 
 app.listen(3000,(req,res)=>{
@@ -76,7 +91,7 @@ app.get("/dashboard/:id",isLoggedIn,async(req,res)=>{
     res.render('dashboard.ejs',{user})
 })
 
-app.get("/dashboard/posts/:id",async(req,res)=>{
+app.get("/dashboard/posts/:id",isLoggedIn,async(req,res)=>{
     let {id}=req.params
     let user=await User.findById(id)
     let posts=user.posts
@@ -91,7 +106,7 @@ app.get("/dashboard/posts/:id",async(req,res)=>{
     res.render('posts.ejs',{postdata,user})
 })
 
-app.get('/delete/:id/:postid',async(req,res)=>{
+app.get('/delete/:id/:postid',isLoggedIn,async(req,res)=>{
     let {id,postid}=req.params
     await Post.findByIdAndDelete(postid)
     let user=await User.findById(id)
@@ -105,13 +120,13 @@ app.get('/logout',(req,res)=>{
     res.redirect('/')
 })
 
-app.get("/post/create/:id",async (req,res)=>{
+app.get("/post/create/:id",isLoggedIn,async (req,res)=>{
     let {id}=req.params
     let user=await User.findById(id)
     res.render('createpost.ejs',{user})
 })
 
-app.post("/post/create/:id",async (req,res)=>{
+app.post("/post/create/:id",isLoggedIn,async (req,res)=>{
     let {id}=req.params
    let {content}=req.body
    let post=await Post.create({
