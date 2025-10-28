@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Posts</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+  <div class="flex flex-col bg-gray-800 min-h-screen items-center gap-6 text-white p-6">
+    <h1 class="bg-green-500 text-xl p-5 rounded-xl">Posts of <%= user.name %>
+    </h1>
+    <div class="flex flex-col items-center">
+      <% if (postdata.length===0) { %>
+        <h2 class="text-lg font-bold">No Posts Available</h2>
+        <a href="/post/create/<%= user._id %>" class="bg-blue-500 hover:bg-blue-600 p-2 rounded w-fit">
+          Create Post
+        </a>
+        <% } else { %>
+          <div class="flex flex-col gap-4">
+            <% postdata.forEach(function(post) { %>
+              <div class="border-2 border-white p-4 rounded-lg flex flex-col gap-2 bg-gray-700">
+                <h2 class="text-lg font-bold">Post: <%= post.postdata %>
+                </h2>
+                <a href="/delete/<%=user._id %>/<%=post._id %>" class="bg-red-500 hover:bg-red-600 p-2 rounded w-fit">
+                  Delete Post
+                </a>
+              </div>
+              <% }) %>
+          </div>
+          <a href="/post/create/<%= user._id %>" class="bg-blue-500 hover:bg-blue-600 p-2 rounded w-fit mt-4">
+            + Create Another Post
+          </a>
+          <% } %>
+    </div>
+    <a href="/logout" class="bg-red-500 hover:bg-red-600 p-2 rounded w-fit">
+      Logout
+    </a>
+
+  </div>
+</body>
+
+</html>

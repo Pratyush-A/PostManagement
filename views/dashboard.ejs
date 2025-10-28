@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+    <div class="flex flex-col bg-gray-800 min-h-screen items-center gap-4 text-white p-5">
+        <h1 class="bg-green-500 text-xl p-5 rounded-xl">Welcome <%= user.name %> </h1>
+        <div class="flex flex-col gap-4">
+            <a href="/post/create/<%=user._id %>" class="bg-blue-500 hover:bg-blue-600 p-2 rounded w-fit">
+                Create Post
+            </a>
+            <a href="/dashboard/posts/<%=user._id %>" class="bg-blue-500 hover:bg-blue-600 p-2 rounded w-fit">
+                View My Posts
+            </a>
+            <a href="/logout" class="bg-red-500 hover:bg-red-600 p-2 rounded w-fit">
+                Logout
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

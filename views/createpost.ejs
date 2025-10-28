@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Post</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-black min-h-screen flex items-center justify-center p-6">
+  <div class="w-full max-w-lg bg-gray-800 rounded-2xl shadow-2xl p-8 text-white transition-all hover:shadow-blue-500/30">
+    
+    <h1 class="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+      Create Post for <%= user.name %>
+    </h1>
+
+    <form action="/post/create/<%= user._id %>" method="post" class="flex flex-col gap-5">
+      <!-- <input type="hidden" name="userId" value="<%= user._id %>" /> -->
+
+      <label class="text-sm font-semibold tracking-wide">Post Content</label>
+      <textarea 
+        class="p-3 rounded-xl text-gray-900 focus:ring-4 focus:ring-blue-400 outline-none resize-none h-32 transition-all duration-300" 
+        name="content" 
+        placeholder="Write something amazing..." 
+        required>
+      </textarea>
+
+      <button 
+        type="submit" 
+        class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 p-3 rounded-xl font-semibold shadow-lg hover:shadow-indigo-500/50 transition-all duration-300">
+        🚀 Create Post
+      </button>
+    </form>
+
+    <div class="text-center mt-6">
+      <a href="/users" class="text-sm text-gray-300 hover:text-blue-400 transition-colors duration-200">
+        ← Back to All Users
+      </a>
+    </div>
+
+  </div>
+</body>
+</html>
